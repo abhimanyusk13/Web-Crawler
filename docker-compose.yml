@@ -1,0 +1,71 @@
+version: "3.8"
+
+services:
+  fetcher:
+    build: .
+    container_name: news-fetcher
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/app
+    command: poetry run python -m crawler.fetch_async --max 100 --concurrency 10 --rate-interval 2.0
+
+  store:
+    build: .
+    container_name: news-store
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - mongo
+    volumes:
+      - .:/app
+    command: poetry run python -m crawler.store
+
+  indexer:
+    build: .
+    container_name: news-indexer
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+      - typesense
+    volumes:
+      - .:/app
+    # stub for now; replace with your indexer CLI when ready
+    command: tail -f /dev/null
+
+  mongo:
+    image: mongo:6.0
+    container_name: news-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: news-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  typesense:
+    image: typesense/typesense:0.26.0
+    container_name: news-typesense
+    ports:
+      - "8108:8108"
+    env_file:
+      - .env
+    command: >
+      --data-dir /data
+      --api-key ${TYPESENSE_API_KEY}
+      --listen-port 8108
+
+volumes:
+  mongo_data:
