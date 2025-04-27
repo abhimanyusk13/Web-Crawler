@@ -69,3 +69,15 @@ services:
 
 volumes:
   mongo_data:
+
+indexer:
+  build: .
+  container_name: news-indexer
+  env_file:
+    - .env
+  depends_on:
+    - mongo
+    - typesense
+  volumes:
+    - .:/app
+  command: poetry run python -m crawler.indexer
