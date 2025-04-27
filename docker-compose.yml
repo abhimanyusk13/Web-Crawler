@@ -1,6 +1,19 @@
 version: "3.8"
 
 services:
+ api:
+    build: .
+    container_name: news-api
+    env_file:
+      - .env
+    depends_on:
+      - typesense
+    volumes:
+      - .:/app
+    command: >
+      uvicorn crawler.api:app
+        --host ${FASTAPI_HOST}
+        --port ${FASTAPI_PORT}
   fetcher:
     build: .
     container_name: news-fetcher
