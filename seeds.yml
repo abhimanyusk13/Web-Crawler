@@ -1,0 +1,8 @@
+reuters:
+  rss:       https://www.reuters.com/rssFeed/topNews
+  sitemap:   https://www.reuters.com/sitemap_index.xml
+  sections:
+    - https://www.reuters.com/world
+
+bbc:
+  rss: https://feeds.bbci.co.uk/news/rss.xml
