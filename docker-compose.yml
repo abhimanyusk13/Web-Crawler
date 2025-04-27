@@ -10,10 +10,7 @@ services:
       - typesense
     volumes:
       - .:/app
-    command: >
-      uvicorn crawler.api:app
-        --host ${FASTAPI_HOST}
-        --port ${FASTAPI_PORT}
+    command: uvicorn crawler.api:app --host ${FASTAPI_HOST} --port ${FASTAPI_PORT}
   fetcher:
     build: .
     container_name: news-fetcher
@@ -49,6 +46,7 @@ services:
       - .:/app
     # stub for now; replace with your indexer CLI when ready
     command: tail -f /dev/null
+    command: poetry run python -m crawler.indexer
 
   mongo:
     image: mongo:6.0
