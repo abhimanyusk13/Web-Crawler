@@ -6,3 +6,27 @@ reuters:
 
 bbc:
   rss: https://feeds.bbci.co.uk/news/rss.xml
+
+cnn:
+  rss: http://rss.cnn.com/rss/edition.rss
+
+aljazeera:
+  rss: https://www.aljazeera.com/xml/rss/all.xml
+
+guardian:
+  rss: https://www.theguardian.com/world/rss
+
+nytimes:
+  rss: https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+
+washingtonpost:
+  rss: https://feeds.washingtonpost.com/rss/world
+
+apnews:
+  rss: https://apnews.com/rss
+
+foxnews:
+  rss: http://feeds.foxnews.com/foxnews/world
+
+thehindu:
+  rss: https://www.thehindu.com/news/international/feeder/default.rss
